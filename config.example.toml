@@ -1,0 +1,78 @@
+# Copy to config.toml (git-ignored) and uncomment what you want to change.
+# Every key matches a field of akn/config.py; an unknown key is an error.
+# A path may start with ~ (the home folder). The paths that name something in
+# the projects folder (docs_repo, and the repositories and patterns of the
+# instruction_* keys) may be relative to projects_dir, and then follow it.
+
+# --- transcripts ---------------------------------------------------------------
+# accounts = ["~/.claude", "~/.claude-work"]   # default: every ~/.claude* folder with a projects/ folder
+# project_include = ["C--projects-app*"]       # globs on project dir names; empty = all
+# project_exclude = ["C--scratch-*"]
+# include_sidechains = false
+
+# --- where things are -------------------------------------------------------------
+# The paths below, unless set themselves, derive from these two.
+# projects_dir = "C:/projects"   # default: the folder this checkout sits in
+# ai_dir = "C:/ai"               # default: D:/ai if there is one, else C:/ai
+
+# --- models (llama.cpp) ---------------------------------------------------------
+# llama_dir = "<ai_dir>/llama.cpp/b11344"
+# llm_model = "<ai_dir>/unsloth/Qwen3.8-27B-GGUF/Qwen3.8-27B-UD-Q4_K_M.gguf"
+# embed_model = "<ai_dir>/Qwen/Qwen3-Embedding-0.6B-GGUF/Qwen3-Embedding-0.6B-Q8_0.gguf"
+# llm_port = 8091
+# embed_port = 8092
+# llm_parallel = 2            # concurrent requests; each needs llm_ctx_per_slot of context
+# llm_ctx_per_slot = 24576
+# llm_thinking = false        # let the model reason before answering (slower, sometimes better)
+
+# --- what gets read -------------------------------------------------------------
+# window_before_chars = 5000
+# window_after_chars = 9000
+# window_max_chars = 36000
+# window_min_score = 1.0
+# mine_compact_summaries = false
+
+# --- rules the lessons are compared against -------------------------------------
+# Default: every account's CLAUDE.md, the projects folder's and each project's, and
+# each account's memory files.
+# instruction_globs = ["~/.claude*/CLAUDE.md", "CLAUDE.md", "*/CLAUDE.md", "~/.claude*/projects/*/memory/*.md"]
+# A checkout that lags its trunk holds an old CLAUDE.md: read the trunk's from git
+# (the curator is given it too, for reference), and skip the checkouts' copies.
+# instruction_git = [["myrepo", "origin/main", "CLAUDE.md"]]
+# instruction_skip = ["myrepo/CLAUDE.md", "myrepo-*/CLAUDE.md"]
+
+# --- the curator ------------------------------------------------------------------
+# curator_config_dir = "~/.claude"   # the account it runs on; the others are fallbacks
+# curator_model = "opus"
+# The accounts whose CLAUDE.md gets the global section. Default: every one in
+# `accounts`. Name them if you keep a copy of a config folder beside the real ones,
+# or if `accounts` lists only some of them. Each named account needs a CLAUDE.md
+# (an empty one will do): without it the section is not written, and the run says why.
+# curated_accounts = ["~/.claude", "~/.claude-work"]
+# stale_report_days = 2.0             # an older lessons report means the nightly has stopped: say so
+# curated_global_chars = 4000         # the sections' budgets: every session reads them
+# curated_global_rules = 15
+# curated_workspace_chars = 5000
+# curated_workspace_rules = 20
+# curator_max_candidates = 150        # lessons shown to it in one morning, best first
+# curator_recur_sessions = 3          # a decided lesson returns after this many more sessions
+# What it should know about the projects folder that it cannot see for itself:
+# curator_notes = """\
+# The `myrepo` checkout is out of date: to check a fact about it, read `myrepo-dev`. \
+# Rules for myrepo alone go under a `### myrepo` subheading in the workspace section."""
+
+# --- doc cards ---------------------------------------------------------------------
+# A repository whose scripts/docsearch.py reads summary cards and embeddings from
+# its shared cache (see akn/doccards.py). Unset: nightly skips this step.
+# docs_repo = "myrepo"
+# What the card writer is told about that project and its documents, and example tags:
+# docs_project = "a compiler written in OCaml: issues, design decisions and the language spec"
+# docs_tags = ["parser", "codegen", "build"]
+
+# --- where this tool keeps its files, and how much ---------------------------------
+# state_dir = "<this folder>/state"
+# reports_dir = "<this folder>/reports"
+# curated_dir = "<this folder>/curated"   # the curated sections' history (a git repository)
+# reports_keep = 30                       # dated reports kept
+# cache_max_age_days = 14                 # cached embeddings and answers unused this long are deleted
+# cluster_batch = 10000                   # new lessons clustered at most this many at a time

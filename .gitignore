@@ -1,0 +1,7 @@
+state/
+reports/
+__pycache__/
+*.pyc
+.pytest_cache/
+config.toml
+curated/
